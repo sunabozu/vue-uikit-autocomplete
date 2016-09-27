@@ -1,0 +1,43 @@
+{
+  "name": "vue-uikit-autocomplete",
+  "version": "0.0.1",
+  "description": "A small set of Vue input components adjusted for Uikit",
+  "main": " ",
+  "scripts": {
+    "build-vkinput": "MODULE_NAME=VkInput webpack",
+    "build-vkautocomplete": "MODULE_NAME=VkAutocomplete webpack",
+    "build-vkautocompletehttp": "MODULE_NAME=VkAutocompleteHttp webpack",
+    "build-all": "npm run build-vkinput && npm run build-vkautocomplete && npm run build-vkautocompletehttp",
+    "build-release": "PRODUCTION=true npm run build-all",
+    "dev": "webpack-dev-server --inline --hot --progress"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sunabozu/vue-uikit-autocomplete.git"
+  },
+  "keywords": [
+    "Vue",
+    "Uikit",
+    "Vuikit",
+    "autocomplete"
+  ],
+  "author": "troorl <troorl@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sunabozu/vue-uikit-autocomplete/issues"
+  },
+  "homepage": "https://github.com/sunabozu/vue-uikit-autocomplete#readme",
+  "dependencies": {
+    "lodash.debounce": "^4.0.8"
+  },
+  "devDependencies": {
+    "babel-loader": "^6.2.5",
+    "babel-preset-es2015": "^6.14.0",
+    "css-loader": "^0.25.0",
+    "vue": "^2.0.0-rc.6",
+    "vue-loader": "^9.5.0",
+    "vue-style-loader": "^1.0.0",
+    "webpack": "^1.13.2",
+    "webpack-dev-server": "^1.16.1"
+  }
+}
