@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Uikit-Autocomplete</title>
+    <link rel="stylesheet" type="text/css" href="http://vuikit.github.io/vuikit/static/css/uikit.css">
+    <script type="text/javascript" src="http://cdn.rawgit.com/vuejs/vue/next/dist/vue.min.js"></script>
+    <script type="text/javascript" src="http://cdn.rawgit.com/sunabozu/vue-uikit-autocomplete/master/dist/vue.min.js/VkInput.js"></script>
+    <script type="text/javascript" src="http://cdn.rawgit.com/sunabozu/vue-uikit-autocomplete/master/dist/vue.min.js/VkAutocomplete.js"></script>
+    <script type="text/javascript" src="http://cdn.rawgit.com/sunabozu/vue-uikit-autocomplete/master/dist/vue.min.js/VkAutocompleteHttp.js"></script>
+    <script type="text/javascript" src="prism/prism.js"></script>
+    <link rel="stylesheet" type="text/css" href="prism/prism.css">
+
+    <link rel="stylesheet" type="text/css" href="notification/notification.css">
+    <script type="text/javascript" src="notification/notification.js"></script>
+
+    <style type="text/css">
+      .uk-container {
+        padding: 0 30px;
+      }
+
+      .header {
+        margin: 20px;
+        -webkit-filter: saturate(.2);
+      }
+
+      .header img {
+        margin-right: 5px;
+        margin-top: -4px;
+        -webkit-filter: brightness(3);
+      }
+
+      pre {
+        overflow-x: scroll;
+        max-width: 200px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" class="uk-container">
+      <div class="uk-container-center uk-text-center header">
+        <h3><img src="github.png"><a href="">Get it on Github</a></h3>
+      </div>
+
+      <ul class="uk-grid uk-grid-small uk-grid-match">
+        <li class="uk-width-xlarge-1-3 uk-width-medium-1-2">
+          <div class="uk-panel uk-panel-box uk-form">
+            <h1>VkInput</h1>
+            <hr class="uk-article-divider" />
+
+            <vk-input
+              :type="type"
+              placeholder="enter some text"
+              :icon="icon"
+              :color="color"
+              :disabled="disabled"
+              :size="size"
+              :wide="wide"
+              :flip-icon="flipIcon"
+              v-model="model"
+              >    
+            </vk-input>
+            
+            <table class="uk-table">
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>type</code></td>
+                        <td>
+                          <select class="uk-form-small" v-model="type">
+                            <option v-for="opt in typeOpts" :value="opt">{{ opt }}</option>
+                          </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><code>placeholder</code></td>
+                        <td>Any text</td>
+                    </tr>
+                    <tr>
+                        <td><code>icon</code></td>
+                        <td>
+                          <select class="uk-form-small" v-model="icon">
+                            <option v-for="opt in iconOpts" :value="opt">{{ opt }}</option>
+                          </select>
+                          <a href="http://getuikit.com/docs/icon.html">see more</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><code>color</code></td>
+                        <td>
+                          <select class="uk-form-small" v-model="color">
+                            <option v-for="opt in colorOpts" :value="opt">{{ opt }}</option>
+                          </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><code>disabled</code></td>
+                        <td>
+                          <select class="uk-form-small" v-model="disabled">
+                            <option v-for="opt in disabledOpts" :value="opt">{{ opt }}</option>
+                          </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><code>size</code></td>
+                        <td>
+                          <select class="uk-form-small" v-model="size">
+                            <option v-for="opt in sizeOpts" :value="opt">{{ opt }}</option>
+                          </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><code>wide</code></td>
+                        <td>
+                          <select class="uk-form-small" v-model="wide">
+                            <option v-for="opt in wideOpts" :value="opt">{{ opt }}</option>
+                          </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><code>flip-icon</code></td>
+                        <td>
+                          <select class="uk-form-small" v-model="flipIcon">
+                            <option v-for="opt in flipIconOpts" :value="opt">{{ opt }}</option>
+                          </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+          </div>
+        </li>
+
+        <li class="uk-width-xlarge-1-3 uk-width-medium-1-2">
+          <div class="uk-panel uk-panel-box uk-form">
+            <h1>VkAutocomplete</h1>
+            <hr class="uk-article-divider" />
+
+            <vk-autocomplete
+              placeholder="search for a local item"
+              :wide="wide"
+              v-model="model"
+              :items="autocompleteItems"
+              :field="field"
+              :delegate="customDelegate ? delegate : undefined"
+              @select="onSelect"
+              >    
+            </vk-autocomplete>
+
+            <table class="uk-table">
+              <thead>
+                  <tr>
+                      <th>Property</th>
+                      <th>Value</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <tr>
+                    <td><code>items</code></td>
+                    <td>
+                      <pre>
+                        <code class="language-javascript">
+[
+  {
+    text: 'Kyiv',
+    country: 'Ukraine'
+  },
+  {
+    text: 'Warsaw',
+    country: 'Poland'
+  },
+  {
+    text: 'Munich',
+    country: 'Germany'
+  },
+  {
+    text: 'Milan',
+    country: 'Italy'
+  },
+  {
+    text: 'Barcelona', 
+    country: 'Spain'
+  }
+]</code>
+                      </pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>field</code></td>
+                    <td>
+                      <select class="uk-form-small" v-model="field">
+                        <option v-for="opt in fieldOpts" :value="opt">{{ opt }}</option>
+                      </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>delegate</code></td>
+                    <td>
+                      <div>
+                        <input type="checkbox" value="" v-model="customDelegate">
+                        A custom delegate
+                      </div>
+                      <pre>
+                        <code class="language-javascript" v-pre>
+Vue.component('custom-delegate', {
+  props: {
+    data: {},
+
+    field: {}
+  },
+
+  template: '&lt;div&gt;' +
+              '&lt;span v-html="data[field]"&gt;&lt;/span&gt;' +
+              '&lt;br&gt;' +
+              '&lt;span style="color: #ccc"&gt;{{ data.country }}&lt;/span&gt;' +
+            '&lt;/div&gt;'
+})
+                        </code>
+                      </pre>
+                    </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </li>
+
+        <li class="uk-width-xlarge-1-3 uk-width-medium-1-2">
+          <div class="uk-panel uk-panel-box uk-form">
+            <h1>VkAutocompleteHttp</h1>
+            <hr class="uk-article-divider" />
+
+            <vk-autocomplete-http
+              placeholder="search for a book"
+              v-model="model"
+              :wide="wide"
+              icon="search"
+              :animate="true"
+              :url="url"
+              :debounce="debounce"
+              @change="adjustUrl"
+              @select="onSelect"
+              :filter="filterResults"
+              >    
+            </vk-autocomplete-http>
+
+            <table class="uk-table">
+              <thead>
+                  <tr>
+                      <th>Property</th>
+                      <th>Value</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <tr>
+                    <td><code>url</code></td>
+                    <td>A URL you want to fetch</td>
+                </tr>
+                <tr>
+                    <td><code>http-headers</code></td>
+                    <td>An array of headers for possible authentication</td>
+                </tr>
+                <tr>
+                    <td><code>debounce</code></td>
+                    <td>
+                      <select class="uk-form-small" v-model="debounce">
+                        <option v-for="opt in debouncedOpts" :value="opt">{{ opt }}</option>
+                      </select> ms
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>filter</code></td>
+                    <td>
+                      <pre>
+                        <code class="language-javascript">
+filterResults(data) {
+  if(!data || !data.items)
+    return
+
+  return data.items.map(function(item) {
+    item.text = item.volumeInfo.title
+    return item
+  })
+}
+                        </code>
+                      </pre>
+                    </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <script type="text/javascript">
+      window.onload = function() {
+        // Custom delegate
+        Vue.component('custom-delegate', {
+          props: {
+            data: {},
+
+            field: {}
+          },
+
+          template: '<div>' +
+                      '<span v-html="data[field]"></span>' +
+                      '<br>' +
+                      '<span style="color: #ccc">{{ data.country }}</span>' +
+                    '</div>'
+        })
+
+        new Vue({
+          components: {
+            VkInput: VkInput,
+            VkAutocomplete: VkAutocomplete,
+            VkAutocompleteHttp: VkAutocompleteHttp
+          },
+
+          data: function() {
+            return {
+              model: '',
+
+              // VkInput
+
+              typeOpts: ['text', 'number', 'email', 'password'],
+              type: 'text',
+
+              iconOpts: ['', 'cloud-upload', 'search', 'paper-plane'],
+              icon: '',
+
+              colorOpts: ['', 'danger', 'success'],
+              color: '',
+
+              disabledOpts: [false, true],
+              disabled: false,
+
+              sizeOpts: ['', 'large', 'small'],
+              size: '',
+
+              wideOpts: ['', 'large', 'medium', 'small', 'mini'],
+              wide: 'large',
+
+              flipIconOpts: [false, true],
+              flipIcon: false,
+
+              //VkAutocomplete
+
+              autocompleteItems: [
+                {
+                  text: 'Kyiv',
+                  country: 'Ukraine'
+                },
+                {
+                  text: 'Warsaw',
+                  country: 'Poland'
+                },
+                {
+                  text: 'Munich',
+                  country: 'Germany'
+                },
+                {
+                  text: 'Milan',
+                  country: 'Italy'
+                },
+                {
+                  text: 'Barcelona', 
+                  country: 'Spain'
+                }
+              ],
+
+              fieldOpts: ['text', 'country'],
+              field: 'text',
+
+              customDelegate: false,
+              delegate: 'custom-delegate',
+
+              // VkAutocompleteHttp
+
+              url: '',
+
+              debouncedOpts: [100, 500, 1000, 2000],
+              debounce: 500
+            }
+          },
+
+          methods: {
+            adjustUrl(query) {
+              if(!query || query == '')
+                return
+
+              this.url = `https://www.googleapis.com/books/v1/volumes?q=title:${query}`
+            },
+
+            filterResults(data) {
+              if(!data || !data.items)
+                return
+
+              return data.items.map(function(item) {
+                item.text = item.volumeInfo.title
+                return item
+              })
+            },
+
+            onSelect(item) {
+              notification({title: 'Item selected!', message: item.text ? item.text : item})
+            }
+          },
+
+          mounted: function() {
+          }
+        }).$mount('#app')
+      }
+    </script>
+  </body>
+</html>
