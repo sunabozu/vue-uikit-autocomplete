@@ -392,7 +392,7 @@ filterResults(data) {
               if(!query || query == '')
                 return
 
-              this.url = `https://www.googleapis.com/books/v1/volumes?q=title:${query}`
+              this.url = 'https://www.googleapis.com/books/v1/volumes?q=title:' + query
             },
 
             filterResults: function(data) {
