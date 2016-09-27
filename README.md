@@ -4,6 +4,7 @@
 
 ## Links
 - [Demo](http://sunabozu.github.io/vue-uikit-autocomplete/)
+- [Vuikit](https://github.com/vuikit/vuikit/tree/next)
 
 Currently it consists of 3 components:
 
