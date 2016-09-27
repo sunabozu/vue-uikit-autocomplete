@@ -22,7 +22,13 @@ Directly in an HTML page (they will be available as global variables by their na
 <script type="text/javascript" src="http://cdn.rawgit.com/sunabozu/vue-uikit-autocomplete/master/dist/vue.min.js/VkAutocompleteHttp.js"></script>
 ```
 
-Or by importing them:
+Or by installing...
+
+```
+npm i vue-uikit-autocomplete --save
+```
+
+...and then importing them:
 
 ``` javascript
 import VkInput from 'vue-uikit-autocomplete/dist/VkInput'
