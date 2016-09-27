@@ -388,14 +388,14 @@ filterResults(data) {
           },
 
           methods: {
-            adjustUrl(query) {
+            adjustUrl: function(query) {
               if(!query || query == '')
                 return
 
               this.url = `https://www.googleapis.com/books/v1/volumes?q=title:${query}`
             },
 
-            filterResults(data) {
+            filterResults: function(data) {
               if(!data || !data.items)
                 return
 
@@ -405,7 +405,7 @@ filterResults(data) {
               })
             },
 
-            onSelect(item) {
+            onSelect: function(item) {
               notification({title: 'Item selected!', message: item.text ? item.text : item})
             }
           },
