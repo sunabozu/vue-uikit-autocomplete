@@ -16,6 +16,11 @@ export default {
       default: 'text'
     },
 
+    autofocus: {
+      type: Boolean,
+      default: false
+    },
+
     placeholder: {
       type: String
     },
@@ -90,10 +95,11 @@ export default {
 </script>
 
 <template>
-  <span :class="['uk-form', {'uk-form-icon': icon}]">
+  <span :class="['uk-form', {'uk-form-icon': icon}]" @focus="focus">
     <i v-if="icon" :class="[iconName, {'flip-icon': flipIcon}]"></i>
     <input
       ref="input"
+      :autofocus="autofocus"
       :type="type"
       :class="[colorName, wideName, sizeName]"
       name=""
