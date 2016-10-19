@@ -48,6 +48,10 @@ export default {
     flipIcon: {
       type: Boolean,
       default: false
+    },
+
+    dataRules: {
+      type: String
     }
   },
 
@@ -108,6 +112,7 @@ export default {
       autocomplete="off"
       :disabled="disabled"
       v-model="currentValue"
+      :data-rules="dataRules"
       >
   </span>
 </template>
